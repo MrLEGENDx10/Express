@@ -9,7 +9,7 @@ require('dotenv').config(
     { path: './.env' }
 )
 
-
+// nothing 
 connectToDb();
 
 app.use(express.json())
