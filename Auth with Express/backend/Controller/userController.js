@@ -53,47 +53,33 @@ const signUp = async (req,res) =>{
 
 const signIn = async (req,res)=>{
     const {email,password} = req.body;
-    try {
-        if(!email || !password){
-            return res.status(400).json({
-                status:"fail",
-                message:"All fields are required"
-            })
-        }
-
-        var validEmail = emailValidator.validate(email);
-        if(!validEmail){
-            return res.status(400).json({
-                status:"fail",
-                message:"Invalid Email"
-            })
-        }
-
-        const result = await userModel.findOne({email:email});
-        if(!result){
-            return res.status(400).json({
-                status:"fail",
-                message:"Email does not exist"
-            })
-        }
-
-        if(password != result.password){
-            return res.status(400).json({
-                status:"fail",
-                message:"Invalid Password"
-            })
-        }
-
-        return res.status(200).json({
-            success:true,
-            data: result
+    if(!email || !password){
+        return res.status(400).json({
+            status:"fail",
+            message:"All fields are required"
         })
+    }
+    try {
+        const user = await userModel.findOne({
+            email
+        })
+        .select("+password");
+
+        if ( !user || password !== user.password ){
+            return res.status(400).json({
+                status:"fail",
+                message:"Invalid Credentials"
+            })
+        }
+
+
     } catch (error) {
         res.status(400).json({
             status: "fail",
             message: error.message
         })
     }
+
 }
 
 module.exports = {
