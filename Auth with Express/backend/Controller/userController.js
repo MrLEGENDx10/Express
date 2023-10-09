@@ -71,9 +71,24 @@ const signIn = async (req,res)=>{
                 message:"Invalid Credentials"
             })
         }
+        const token = user.jwtToken(); 
+        user.password = undefined;
+        
+        const /* `cookieOptions` is an object that specifies the options for the cookie that will be
+        set in the response. In this case, it is used to set the maximum age of the cookie to
+        24 hours (24 * 60 * 60 * 1000 milliseconds), and to make the cookie accessible only
+        through HTTP (httpOnly: true). */
+        cookieOptions = {
+            maxAge: 24 * 60 * 60 * 1000, // 24 hours
+            httpOnly: true
+        }
+        res.cookie("token",token,cookieOptions);
+        res.status(200).json({
+            status:true,
+            data:user
+        })
 
-
-    } catch (error) {
+        } catch (error) {
         res.status(400).json({
             status: "fail",
             message: error.message

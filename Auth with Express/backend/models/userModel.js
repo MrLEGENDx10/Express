@@ -36,8 +36,12 @@ const userSchema = new Schema({
 userSchema.methods = {
     jwtToken () {
         return this.jwtToken.signin({
-            id:this._id,
-        })
+            id:this._id,email:this.email
+        }
+        ,
+        process.env.SECRET,
+        {expireIn:"24h"}
+        )
     }
 }
 
