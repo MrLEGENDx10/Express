@@ -32,6 +32,14 @@ const userSchema = new Schema({
         default:Date.now()
     }
 })
+    
+userSchema.methods = {
+    jwtToken () {
+        return this.jwtToken.signin({
+            id:this._id,
+        })
+    }
+}
 
 const userModel=mongoose.model("User",userSchema);
 module.exports=userModel;
