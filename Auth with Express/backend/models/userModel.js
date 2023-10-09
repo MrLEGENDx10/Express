@@ -22,6 +22,14 @@ const userSchema = new Schema({
     },
     forgetPasswordToken:{
         type:String
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now()
+    },
+    updatedAt:{
+        type:Date,
+        default:Date.now()
     }
 })
 

@@ -8,7 +8,12 @@ exports.home = async (req,res)=>{
 exports.signUp = async (req,res) =>{
     const { name,email,password,ConfirmPassword } = req.body;
     try {
-        const userInfo = new userModel(req.body);
+        const userInfo = new userModel({
+            name,
+            email,
+            password,
+            ConfirmPassword
+        });
         const result = await userInfo.save();
         return res.status(200).json({
             success:true,
