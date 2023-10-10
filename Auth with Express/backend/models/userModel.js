@@ -1,4 +1,5 @@
 const mongoose =require ('mongoose');
+const jwt = require('jsonwebtoken');
 const {Schema}=mongoose;
 
 const userSchema = new Schema({
@@ -35,7 +36,7 @@ const userSchema = new Schema({
     
 userSchema.methods = {
     jwtToken () {
-        return this.jwtToken.signin({
+        return jwt.sign({
             id:this._id,email:this.email
         }
         ,
