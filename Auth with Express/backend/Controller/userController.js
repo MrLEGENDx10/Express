@@ -96,7 +96,19 @@ const signIn = async (req,res)=>{
 }
 
 const getUser = async (req,res)=>{
-    
+    const userId = req.user.id;
+    try{
+        const user = await userModel.findById(userId);
+        return res.status(200).json({
+            status:true,
+            data:user
+        })
+    } catch(error){
+        return res.status(400).json({
+            status:false,
+            message:error.message
+        })
+    }
 }
 
 module.exports = {
