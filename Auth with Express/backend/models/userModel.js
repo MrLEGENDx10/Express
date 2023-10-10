@@ -45,7 +45,7 @@ userSchema.methods = {
         }
         ,
         process.env.SECRET,
-        {expireIn:"24h"}
+        {expiresIn:"24h"}
         )
     }
 }

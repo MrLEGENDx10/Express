@@ -1,9 +1,7 @@
 const userModel = require('../models/userModel');
 const emailValidator = require('email-validator');
 const jwt = require('jsonwebtoken');
-require('dotenv').config(
-    {path:'../.env'}
-)
+
 
 const home = async (req,res)=>{
     res.send('Home Route');
@@ -97,8 +95,13 @@ const signIn = async (req,res)=>{
 
 }
 
+const getUser = async (req,res)=>{
+    
+}
+
 module.exports = {
     home,
     signUp,
-    signIn
+    signIn,
+    getUser
 }
