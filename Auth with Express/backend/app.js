@@ -5,7 +5,9 @@ const cors = require('cors');
 const connectToDb = require('./config/db.js');
 const cookieParser = require('cookie-parser');
 const authRouter  = require('./routes/userRoutes.js');
-
+require('dotenv').config(
+    { path: './.env' }
+)
 
 connectToDb();
 

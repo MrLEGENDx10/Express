@@ -1,6 +1,9 @@
 const userModel = require('../models/userModel');
 const emailValidator = require('email-validator');
-
+const jwt = require('jsonwebtoken');
+require('dotenv').config(
+    {path:'../.env'}
+)
 
 const home = async (req,res)=>{
     res.send('Home Route');
@@ -78,6 +81,7 @@ const signIn = async (req,res)=>{
             maxAge: 24 * 60 * 60 * 1000, // 24 hours
             httpOnly: true
         }
+
         res.cookie("token",token,cookieOptions);
         res.status(200).json({
             status:true,

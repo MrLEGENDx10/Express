@@ -2,7 +2,9 @@ const mongoose =require ('mongoose');
 const jwt = require('jsonwebtoken');
 const {Schema}=mongoose;
 const crypto = require('crypto');
-
+require('dotenv').config(
+    { path: '../.env' }
+)
 const userSchema = new Schema({
     name:{
         type:String,
@@ -38,7 +40,8 @@ const userSchema = new Schema({
 userSchema.methods = {
     jwtToken () {
         return jwt.sign({
-            id:this._id,email:this.email
+            id: this._id,
+            email: this.email
         }
         ,
         process.env.SECRET,
