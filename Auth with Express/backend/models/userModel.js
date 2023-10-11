@@ -36,7 +36,27 @@ const userSchema = new Schema({
         default:Date.now()
     }
 })
+
+/* The commented code is a pre-save middleware function in Mongoose. It is executed before saving a
+user document to the database. */
+// userSchema.pre('save',function(next){
+//     if(!this.isModified('password')){
+//         return next();
+//     }
+//     this.password = this.encryptPassword(this.password);
+//     next();
+// })
     
+
+userSchema.pre('save', async function(){
+    if(!this.isModified('password')){
+        return next();
+    }
+
+    this.password = await bcrypt.hash(this.password,10);
+    return next();
+})
+
 userSchema.methods = {
     jwtToken () {
         return jwt.sign({
