@@ -112,9 +112,45 @@ const getUser = async (req,res)=>{
     }
 }
 
+const logout = (res,req)=>{
+    try {
+        // res.cookie("token","",{maxAge:1}); in this way we can logout by making the cookie expire in 1ms
+       /* `res.clearCookie("token");` is a method in Express.js that is used to clear a cookie from the
+       response. In this case, it is used to clear the "token" cookie, which is typically used for
+       authentication purposes. By clearing the cookie, the user is effectively logged out of the
+       system. */
+        
+        const cookieOptions = {
+            expires: new Date(),
+            httpOnly: true
+        }
+        /* `res.cookie("token","",cookieOptions);` is used to set a cookie named "token" with an empty
+        value and the specified options. In this case, the options include setting the cookie to
+        expire immediately (`expires: new Date()`) and making it accessible only through HTTP
+        (`httpOnly: true`). This effectively clears the "token" cookie from the response, which can
+        be used to log out the user by removing their authentication token. */
+        res.cookie("token","",cookieOptions);
+        res.status(200).json({
+            status:true,
+            message:"Logged Out"
+        })
+
+        return res.status(200).json({
+            status:true,
+            message:"Logged Out"
+        })
+    } catch (error) {
+        return res.status(400).json({
+            status:false,
+            message:error.message
+        })
+    }
+}
+
 module.exports = {
     home,
     signUp,
     signIn,
-    getUser
+    getUser,
+    logout
 }
