@@ -5,6 +5,8 @@ const crypto = require('crypto');
 require('dotenv').config(
     { path: '../.env' }
 )
+const bcrypt = require('bcryptjs');
+
 const userSchema = new Schema({
     name:{
         type:String,
@@ -24,6 +26,8 @@ const userSchema = new Schema({
         required:[true, "Password is required"],
         minlength:[6,"Password must be at least 6 characters long"]
     },
+    
+    
     forgetPasswordToken:{
         type:String
     },
@@ -48,7 +52,7 @@ user document to the database. */
 // })
     
 
-userSchema.pre('save', async function(){
+userSchema.pre('save', async function(next){
     if(!this.isModified('password')){
         return next();
     }

@@ -1,6 +1,7 @@
 const userModel = require('../models/userModel');
 const emailValidator = require('email-validator');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 
 const home = async (req,res)=>{
@@ -66,7 +67,7 @@ const signIn = async (req,res)=>{
         })
         .select("+password");
 
-        if ( !user || password !== user.password ){
+        if ( !user || password !== bcrypt.compare ( password,user.password) ){
             return res.status(400).json({
                 status:"fail",
                 message:"Invalid Credentials" 
